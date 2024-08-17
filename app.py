@@ -89,6 +89,3 @@ st.subheader("Decision Plot for class 0")
 
 st_shap(shap.decision_plot(explainer.expected_value[0], shap_values_input[0], X_test.columns))
 # st.pyplot(fig)
-
-st_shap(shap.decision_plot(explainer.expected_value[0], shap_values_input[0], X_test.columns))
-# st.pyplot(fig)
