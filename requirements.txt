@@ -1,1 +1,4 @@
 shap==0.42
+streamlit
+localtunnel
+streamlit_shap
