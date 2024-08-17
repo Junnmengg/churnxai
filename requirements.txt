@@ -1,4 +1,5 @@
 shap==0.41.0
 matplotlib
+streamlit_shap
 
 
