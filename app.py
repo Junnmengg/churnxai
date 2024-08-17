@@ -6,6 +6,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 import matplotlib.pyplot as plt
+from streamlit_shap import st_shap
 
 # Load the dataset (assuming it's in the same directory)
 customer = pd.read_csv("telecom_churn.csv")
@@ -33,7 +34,7 @@ st.title("SHAP Analysis for Customer Churn")
 
 # Part 1: General SHAP Analysis
 st.header("Part 1: General SHAP Analysis")
-st.dataframe(pd.DataFrame(classification_report(y_test, y_pred, output_dict=True)).T)
+st.dataframe(classification_report(y_pred, y_test,output_dict=True))
 
 # Summary plot
 st.subheader("Summary Plot")
@@ -60,6 +61,7 @@ for feature in X.columns:
     else:  # For other features, keep the original input type
         input_data[feature] = st.number_input(f"Enter {feature}:", value=X_test[feature].mean())
 
+
 # Create a DataFrame from input data
 input_df = pd.DataFrame(input_data, index=[0])
 
@@ -74,18 +76,19 @@ st.write(f"**Churn Probability:** {probability:.2f}")
 # SHAP explanation for the input
 shap_values_input = explainer.shap_values(input_df)
 
+
 # Force plot
 st.subheader("Force Plot for class 0")
-fig, ax = plt.subplots()
-shap.force_plot(explainer.expected_value[0], shap_values_input[0], input_df, matplotlib=True)
-st.pyplot(fig)
+st_shap(shap.force_plot(explainer.expected_value[0], shap_values_input[0], input_df), height=400, width=1000)
+
+# st.write(input_df)
+# st.pyplot(fig,bbox_inches='tight')
 
 # Decision plot
 st.subheader("Decision Plot for class 0")
-fig, ax = plt.subplots()
-shap.decision_plot(explainer.expected_value[0], shap_values_input[0], X_test.columns)
-st.pyplot(fig)
 
+st_shap(shap.decision_plot(explainer.expected_value[0], shap_values_input[0], X_test.columns))
+# st.pyplot(fig)
 
 st_shap(shap.decision_plot(explainer.expected_value[0], shap_values_input[0], X_test.columns))
 # st.pyplot(fig)
