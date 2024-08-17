@@ -1,4 +1,8 @@
-shap==0.42
-streamlit
-localtunnel
-streamlit_shap
+streamlit==1.19.0
+shap==0.41.0
+pandas==2.0.3
+numpy==1.24.4
+scikit-learn==1.2.2
+matplotlib==3.7.1
+streamlit-shap==0.0.8
+
